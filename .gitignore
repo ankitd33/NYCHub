@@ -1,0 +1,4 @@
+/nyc-hub-react/api/__pycache__
+/nyc-hub-react/api/venv
+/nyc-hub-react/node_modules
+.DS_Store
