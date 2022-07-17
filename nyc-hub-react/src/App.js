@@ -7,18 +7,27 @@ function App() {
 
   useEffect(() => {
     const k = 2;
-    fetch('/time').then(res => res.json()).then(data => {
+    fetch('/api/time').then(res => res.json()).then(data => {
       setCurrentTime(data.time);
     });
-    fetch('/all_events').then(res => res.json()).then(data => {
+    fetch('/api/all_events').then(res => res.json()).then(data => {
       console.log(data.all_events)
     });
-    fetch('/first_event').then(res => res.json()).then(data => {
+    fetch('/api/first_event').then(res => res.json()).then(data => {
       console.log(data.first_event)
     });
-    fetch(`/first_k_events?k=${k}`).then(res => res.json()).then(data => {
+    fetch(`/api/first_k_events?k=${k}`).then(res => res.json()).then(data => {
       console.log(data.first_k_events);
     });
+    fetch('/api/table/events',{
+      'methods':'GET',
+      headers : {
+        'Content-Type':'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
   }, []);
 
   return (
