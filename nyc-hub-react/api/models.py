@@ -10,7 +10,7 @@ class Events(db.Model):
     latitude = db.Column(db.Float(), nullable=False, default=40.745572971436594)
     longitude = db.Column(db.Float(), nullable=False, default=-73.98987275938163)
     description = db.Column(db.Text(), nullable=True)
-    # store tags in json.dump as text
+    # store tags in json.dump as text as {tags: [tag1, tag2]}
     tags = db.Column(db.Text(), nullable=True)
 
     def __repr__(self):
@@ -32,7 +32,7 @@ class Recommendations(db.Model):
     longitude = db.Column(db.Float(), nullable=False, default=-73.98987275938163)
     description = db.Column(db.Text(), nullable=True)
     notes = db.Column(db.Text(), nullable=True)
-    # store tags in json.dump as text
+    # store tags in json.dump as text {tags: [tag1, tag2]}
     tags = db.Column(db.Text(), nullable=True)
     # store links in json.dump as key:value pairs where the key is hyperlinked to the link value
     links = db.Column(db.Text(), nullable=True)

@@ -26,10 +26,31 @@ def get_events():
 
     return jsonify(results)
 
+# This method adds events to the Events table
+#
+# Parameters:
+#   name: passed in as json value stringified this is the events name
+#   ranking: passed in as json value stringified this is the events ranking w default val 5
+#   time: passed in as json value stringified this is the events time w default time currtime in EST
+#   latitude: passed in as json value stringified this is the events lat w default lat my house
+#   longitude: passed in as json value stringified this is the events long w default long my house
+#   description: passed in as json value stringified this is the events description
+#   tags: passed in as json value stringified this is the events tags used to classify and filter events
 @app.route("/api/table/add_event", methods=["POST"], strict_slashes=False)
 def add_event():
-    request_data = request.get_json()
-    new_event = Events()
+    request_data = request.get_json(silent=True)
+    new_event = Events(
+        # name is key so fail if no name provided
+        name = request_data['name'],
+        # if no ranking provided pass None use default from model
+        ranking = request_data['ranking'] if 'ranking' in request_data else None,
+        time = request_data['time'] if 'time' in request_data else None,
+        latitude = request_data['latitude'] if 'latitude' in request_data else None,
+        longitude = request_data['longitude'] if 'longitude' in request_data else None,
+        description = request_data['description'] if 'description' in request_data else '',
+        # adding tag untagged if no tags passed in
+        tags = request_data['tags'] if 'tags' in request_data else "{'tags': ['untagged']}"
+    )
     db.session.add(new_event)
     db.session.commit()
     return 'Done', 201
@@ -69,12 +90,38 @@ def get_recommendations():
 
     return jsonify(results)
 
+# This method adds recs to the Recommendations table
+#
+# Parameters:
+#   name: passed in as json value stringified this is the recs name
+#   ranking: passed in as json value stringified this is the recs ranking w default val 5
+#   visited: passed in as json value stringified this is if ive visited the rec w default as False
+#   latitude: passed in as json value stringified this is the recs lat w default lat my house
+#   longitude: passed in as json value stringified this is the recs long w default long my house
+#   description: passed in as json value stringified this is the recs description
+#   notes: passed in as json value stringified these are notes ab the rec
+#   tags: passed in as json value stringified this is the recs tags used to classify and filter recs
+#   links: passed in as json value stringified this is the recs links used to hyperlink out for more info
 @app.route("/api/table/add_recommendation", methods=["POST"], strict_slashes=False)
 def add_recommendation():
-    recs = Recommendations.query.all()
-    results = recommendations_schema.dump(recs)
-
-    return jsonify(results)
+    request_data = request.get_json(silent=True)
+    new_rec = Recommendations(
+        # name is key so fail if no name provided
+        name = request_data['name'],
+        # if no ranking provided pass None use default from model
+        ranking = request_data['ranking'] if 'ranking' in request_data else None,
+        visited = request_data['visited'] if 'visited' in request_data else None,
+        latitude = request_data['latitude'] if 'latitude' in request_data else None,
+        longitude = request_data['longitude'] if 'longitude' in request_data else None,
+        description = request_data['description'] if 'description' in request_data else '',
+        notes = request_data['notes'] if 'notes' in request_data else '',
+        # adding tag untagged if no tags passed in
+        tags = request_data['tags'] if 'tags' in request_data else "{'tags': ['untagged']}",
+        links = request_data['links'] if 'links' in request_data else None
+    )
+    db.session.add(new_rec)
+    db.session.commit()
+    return 'Done', 201
 
 @app.route("/api/table/update_recommendation", methods=["POST"], strict_slashes=False)
 def update_recommendation():
