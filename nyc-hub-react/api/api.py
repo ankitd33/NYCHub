@@ -1,7 +1,7 @@
 import time
 from app import create_app
 from flask import Flask, request, jsonify
-from models import Events, events_schema
+from models import Events, events_schema, Recommendations, recommendations_schema
 
 app = create_app()
 
@@ -41,5 +41,12 @@ def get_first_k_events():
 def get_events():
     events = Events.query.all()
     results = events_schema.dump(events)
+
+    return jsonify(results)
+
+@app.route("/api/table/recommendations", methods=["GET"], strict_slashes=False)
+def get_recommendations():
+    recs = Recommendations.query.all()
+    results = recommendations_schema.dump(recs)
 
     return jsonify(results)

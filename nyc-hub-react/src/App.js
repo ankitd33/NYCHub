@@ -27,8 +27,19 @@ function App() {
     })
     .then(response => response.json())
     .then(response => console.log(response))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error));
+    fetch('/api/table/recommendations',{
+      'methods':'GET',
+      headers : {
+        'Content-Type':'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
   }, []);
+
+
 
   return (
     <div className="App">
