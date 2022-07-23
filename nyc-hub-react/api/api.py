@@ -5,6 +5,11 @@ from models import Events, events_schema, Recommendations, recommendations_schem
 
 app = create_app()
 
+@app.route("/test", methods=["GET"], strict_slashes=False)
+def get_test():
+    return "Test", 201
+
+
 # This method fetches events from the Events table
 #
 # Parameters:
