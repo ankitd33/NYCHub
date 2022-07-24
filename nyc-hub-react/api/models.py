@@ -6,7 +6,7 @@ from sqlalchemy import Enum
 class Events(db.Model):
     name = db.Column(db.String(200), primary_key=True)
     ranking = db.Column(db.Float(), nullable=True, default=5)
-    time = db.Column(db.Float(), default=datetime.now(timezone(timedelta(hours=-5), 'EST')), nullable=True)
+    time = db.Column(db.Float(), default=datetime.timestamp(datetime.now(timezone(timedelta(hours=-5), 'EST'))), nullable=True)
     latitude = db.Column(db.Float(), nullable=False, default=40.745572971436594)
     longitude = db.Column(db.Float(), nullable=False, default=-73.98987275938163)
     description = db.Column(db.Text(), nullable=True)
