@@ -5,22 +5,14 @@ from models import Events, events_schema, Recommendations, recommendations_schem
 
 app = create_app()
 
-@app.route("/test", methods=["GET"], strict_slashes=False)
-def get_test():
-    return "Test", 201
-
-
 # This method fetches events from the Events table
+# GET because it gets data and want it to cache
 #
 # Parameters:
 #   top_x: passed in as json value stringified this will restrict the return to just top_x number of events sorted by ranking
-@app.route("/api/table/events", methods=["POST"], strict_slashes=False)
+@app.route("/api/table/events", methods=["GET"], strict_slashes=False)
 def get_events():
-    # silent is True so it doesnt throw an exception but returns None if no json passed in
-    request_data = request.get_json(silent=True)
-    top_x_events = None
-    if request_data:
-        top_x_events = request_data['top_x'] if 'top_x' in request_data else None
+    top_x_events = request.args.get('top_x', default = None, type = int)
     if top_x_events:
         # getting top x events ranked by ranking
         events = db.session.query(Events).order_by(Events.ranking.desc()).limit(top_x_events).all()
@@ -77,16 +69,13 @@ def delete_event():
     return 'Deleted', 201
 
 # This method fetches recs from the Recommendations table
+# GET because it gets data and want it to cache
 #
 # Parameters:
 #   top_x: passed in as json value stringified this will restrict the return to just top_x number of recs sorted by ranking
-@app.route("/api/table/recommendations", methods=["POST"], strict_slashes=False)
+@app.route("/api/table/recommendations", methods=["GET"], strict_slashes=False)
 def get_recommendations():
-    # silent is True so it doesnt throw an exception but returns None if no json passed in
-    request_data = request.get_json(silent=True)
-    top_x_recs = None
-    if request_data:
-        top_x_recs = request_data['top_x'] if 'top_x' in request_data else None
+    top_x_recs = request.args.get('top_x', default = None, type = int)
     if top_x_recs:
         recs = db.session.query(Recommendations).order_by(Recommendations.ranking.desc()).limit(top_x_events).all()
     else:

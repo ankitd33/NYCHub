@@ -21,19 +21,18 @@ function App() {
     // .then(response => console.log(response))
     // .catch(error => console.log(error));
 
-    fetch('/api/table/events',{
-      method:'POST',
+    fetch('/api/table/events?top_x=5',{
+      method:'GET',
       headers : {
         'Content-Type':'application/json'
       },
-      body: JSON.stringify({'top_x': 5})
     })
     .then(response => response.json())
     .then(response => console.log(response))
     .catch(error => console.log(error));
 
     fetch('/api/table/recommendations',{
-      method:'POST',
+      method:'GET',
       headers : {
         'Content-Type':'application/json'
       },
