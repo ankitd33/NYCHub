@@ -107,21 +107,18 @@ function App() {
   const [value, setValue] = useState("Recs");
 
   const contentAreaStyle = {
-    marginTop: '20px',
-    minHeight: '85vh',
-    minWidth: '110vh',
-    backgroundColor: '#000000',
+    height: '85vh',
+    width: '100vh',
+    marginTop: '35px',
   };
-
-
 
   return (
     <div className="App">
-      <Card sx={contentAreaStyle} variant="outlined">
-      {value === 'Recs' ? <RecsContent /> : null}
-      {value === 'Map' ? <MapContent /> : null}
-      {value === 'Events' ? <EventsContent /> : null}
-      </Card>
+      <div style={contentAreaStyle}>
+        {value === 'Recs' ? <RecsContent /> : null}
+        {value === 'Map' ? <MapContent /> : null}
+        {value === 'Events' ? <EventsContent /> : null}
+      </div>
       <FloatingBottomNav value={value} setValue={setValue} />
     </div>
   );

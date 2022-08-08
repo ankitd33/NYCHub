@@ -16,21 +16,21 @@ function FloatingBottomNav(props) {
     };
 
     return <Card sx={cardStyle} variant="outlined">
-            <BottomNavigation
-                showLabels
-                value={props.value}
-                onChange={(event, newValue) => {
-                    props.setValue(newValue);
-                }}
-                sx={{
-                    backgroundColor: '#000000',
-                }}
-            >
-                <BottomNavigationAction sx={{color: 'white'}} label="Recs" icon={<AddLocationAltOutlinedIcon />} value="Recs" />
-                <BottomNavigationAction sx={{color: 'white'}} label="Map" icon={<MapOutlinedIcon />} value="Map" />
-                <BottomNavigationAction sx={{color: 'white'}} label="Events" icon={<EventAvailableOutlinedIcon />} value="Events" />
-            </BottomNavigation>
-        </Card>;
+        <BottomNavigation
+            showLabels
+            value={props.value}
+            onChange={(event, newValue) => {
+                props.setValue(newValue);
+            }}
+            sx={{
+                backgroundColor: '#000000',
+            }}
+        >
+            <BottomNavigationAction sx={{ color: 'white' }} label="Recs" icon={<AddLocationAltOutlinedIcon />} value="Recs" />
+            <BottomNavigationAction sx={{ color: 'white' }} label="Map" icon={<MapOutlinedIcon />} value="Map" />
+            <BottomNavigationAction sx={{ color: 'white' }} label="Events" icon={<EventAvailableOutlinedIcon />} value="Events" />
+        </BottomNavigation>
+    </Card>;
 }
 
 export default FloatingBottomNav;
