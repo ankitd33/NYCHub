@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridToolbar, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
+import {
+  DataGrid, GridToolbarColumnsButton,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+} from '@mui/x-data-grid';
 
 function RecsContent() {
   const [recsData, setRecsData] = useState([]);
@@ -83,16 +86,23 @@ function RecsContent() {
     },
   ];
 
+  function CustomToolbar(props) {
+    return (
+      <GridToolbarContainer {...props}>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+      </GridToolbarContainer>
+    );
+  }
+
   return <DataGrid
     getRowId={(row) => row.recName}
     rows={recsData}
     columns={columns}
     pageSize={25}
     components={{
-      Toolbar: GridToolbar,
+      Toolbar: CustomToolbar,
     }}
-    disableColumnSelector
-    disableDensitySelector
     rowsPerPageOptions={[25]}
     disableSelectionOnClick
   />
